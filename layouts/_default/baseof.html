@@ -6,13 +6,14 @@
   <title>{{ .Title }} | {{ .Site.Title }}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    [data-theme="dark"] { --bg: #1a1a1a; --sidebar-bg: #161616; --text: #e0e0e0; --text-muted: #aaa; --border: #333; --hover: #fff; }
-    [data-theme="light"] { --bg: #f5f5f5; --sidebar-bg: #ececec; --text: #1a1a1a; --text-muted: #666; --border: #ddd; --hover: #000; }
+    [data-theme="dark"] { --bg: #1a1a1a; --sidebar-bg: #161616; --text: #e0e0e0; --text-muted: #aaa; --border: #333; --hover: #fff; --icon: #fff; }
+    [data-theme="light"] { --bg: #f5f5f5; --sidebar-bg: #ececec; --text: #1a1a1a; --text-muted: #666; --border: #ddd; --hover: #000; --icon: #000; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; transition: background 0.2s, color 0.2s; }
     .sidebar { width: 220px; min-height: 100vh; padding: 40px 20px; border-right: 1px solid var(--border); position: fixed; background: var(--sidebar-bg); }
     .sidebar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
     .sidebar-top a { color: var(--text); text-decoration: none; font-size: 18px; font-weight: 700; }
-    .theme-toggle { background: none; border: none; cursor: pointer; font-size: 18px; color: var(--text-muted); }
+    .theme-toggle { background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 4px; }
+    .theme-toggle svg { width: 18px; height: 18px; stroke: var(--icon); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
     .sidebar ul { list-style: none; }
     .sidebar ul li a { display: block; padding: 8px 0; color: var(--text-muted); text-decoration: none; font-size: 15px; transition: color 0.2s; }
     .sidebar ul li a:hover { color: var(--hover); }
@@ -32,7 +33,10 @@
   <nav class="sidebar">
     <div class="sidebar-top">
       <a href="/">{{ .Site.Title }}</a>
-      <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </div>
     <ul>
       <li><a href="/life-is-good/">Life is good</a></li>
@@ -52,16 +56,5 @@
     {{ block "main" . }}{{ end }}
   </div>
   <script>
-    const saved = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', saved);
-    document.querySelector('.theme-toggle').textContent = saved === 'dark' ? '☀️' : '🌙';
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      document.querySelector('.theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
-    }
-  </script>
-</body>
-</html>
+    function applyTheme(theme) {
+      document.documentElem
