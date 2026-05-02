@@ -1,7 +1,7 @@
 +++
 date = '2026-05-02T16:56:14+09:00'
 draft = false
-title = '첫번째글'
+title = 'First Post'
 +++
 
-test0502
+Today I made my blog!
